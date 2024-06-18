@@ -29,18 +29,5 @@ class RutasController extends Controller
 			return view('rutas.edit')
 			->with('ruta',$ruta);
 
-    }
-	public function store (Request $request)
-    {
-		     $this->validate($request,[
-            'nombre' => 'required'
-        ]);
-        $dat=new Rutas;
-        $dat->nombre=$request->get('nombre');
-        $dat->telefono=$request->get('telefono');
-        $dat->contacto=$request->get('contacto');
-        $dat->save();
-       return Redirect::to('rutas');
-
-    }
+	
 }
