@@ -43,13 +43,4 @@ class RutasController extends Controller
        return Redirect::to('rutas');
 
     }
-	public function update(Request $request)
-    {
-        $dat=Rutas::findOrFail($request->id);
-        $dat->nombre=$request->get('nombre');
-        $dat->contacto=$request->get('contacto');
-        $dat->telefono=$request->get('telefono');
-        $dat->update();
-       return Redirect::to('rutas');
-    }
 }
