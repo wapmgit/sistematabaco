@@ -70,7 +70,8 @@ class AjustesController extends Controller
 				$detalle->save();  
             
 				$articulo=Articulo::findOrFail($idarticulo[$cont]);
-				$valida=$detalle->tipo_ajuste=$tipo[$cont];
+				$valida=$tipo[$cont];
+				dd($valida);
 				$articulo->precio=$costo[$cont];
 				if($valida==="Cargo"){ $tipom=1;
 					$articulo->stock=($articulo->stock+$cantidad[$cont]);
