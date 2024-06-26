@@ -159,7 +159,6 @@ $("#guardar").hide();
        tipo= $("#ptipo option:selected").text();
 
         if (idarticulo!="" && cantidad != "" && tipo!="" & precio_compra!=""){
-            
             if (tipo==="Cargo"){
             subtotal[cont]=(cantidad*precio_compra);
                 }else{
