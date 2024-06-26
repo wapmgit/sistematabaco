@@ -71,7 +71,7 @@ class AjustesController extends Controller
             
 				$articulo=Articulo::findOrFail($idarticulo[$cont]);
 				$valida=$tipo[$cont];
-				dd($valida);
+				//dd($valida);
 				$articulo->precio=$costo[$cont];
 				if($valida==="Cargo"){ $tipom=1;
 					$articulo->stock=($articulo->stock+$cantidad[$cont]);
