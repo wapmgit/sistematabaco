@@ -95,7 +95,7 @@ class AjustesController extends Controller
 				$mov=DB::table('existencia')->where('idalmacen','=',1)->where('idarticulo','=',$idarticulo[$cont])->first();
 				$idmov=$mov->id;
 				$compra=Existencia::findOrFail($idmov);
-				if($valida=="Cargo"){
+				if($valida==1){
 				$compra->existencia=($compra->existencia+$cantidad[$cont]); }else{
 				$compra->existencia=($compra->existencia-$cantidad[$cont]); }
 				$compra->update(); 	
