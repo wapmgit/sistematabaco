@@ -8,7 +8,7 @@ use App\Models\Traslado;
 use App\Models\Relacion;
 use App\Models\Deposito;
 use App\Models\Existencia;
-use App\Models\DetalleTraslado;
+use App\Models\detalleTraslado;
 use App\Models\Tanques;
 use Carbon\Carbon;
 use DB;
