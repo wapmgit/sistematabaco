@@ -160,7 +160,7 @@ $("#guardar").hide();
 
         if (idarticulo!="" && cantidad != "" && tipo!="" & precio_compra!=""){
             
-            if (tipo=="Cargo"){
+            if (tipo==="Cargo"){
             subtotal[cont]=(cantidad*precio_compra);
                 }else{
                   subtotal[cont]=(-cantidad*precio_compra);
