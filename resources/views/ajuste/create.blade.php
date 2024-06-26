@@ -156,18 +156,20 @@ $("#guardar").hide();
         articulo= $("#pidarticulo option:selected").text();
         cantidad= $("#pcantidad").val();
         precio_compra=$("#pcosto").val();
-       tipo= $("#ptipo option:selected").text();
+       tipo= $("#ptipo").val();
 
         if (idarticulo!="" && cantidad != "" && tipo!="" & precio_compra!=""){
-            if (tipo==="Cargo"){
+            if (tipo==1){
+			tmov="Cargo";
             subtotal[cont]=(cantidad*precio_compra);
                 }else{
+			tmov="Descargo";
                   subtotal[cont]=(-cantidad*precio_compra);
                 }
                  
             total=(total)+(subtotal[cont]);
             
-            var fila='<tr class="selected" id="fila'+cont+'"><td><button class="btn btn-warning btn-xs" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="text" readonly name="tipo[]" value="'+tipo+'"></td><td><input type="number" name="cantidad[]" readonly style="width: 80px" value="'+cantidad+'"></td><td><input type="number" name="precio_compra[]"  style="width: 80px" readonly value="'+precio_compra+'"></td><td>'+subtotal[cont].toFixed(2)+'</td></tr>';
+            var fila='<tr class="selected" id="fila'+cont+'"><td><button class="btn btn-warning btn-xs" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="text" readonly name="tipom[]" value="'+tmov+'"><input type="hidden" readonly name="tipo[]" value="'+tipo+'"></td><td><input type="number" name="cantidad[]" readonly style="width: 80px" value="'+cantidad+'"></td><td><input type="number" name="precio_compra[]"  style="width: 80px" readonly value="'+precio_compra+'"></td><td>'+subtotal[cont].toFixed(2)+'</td></tr>';
             cont++;
             limpiar();
 			auxtotal=(total*1).toFixed(2);
@@ -213,8 +215,8 @@ $("#guardar").hide();
       arti=datosarticulo.split('-');
 	        dato=document.getElementById('pidarticulo').value.split('-');
 	  
-      tipo= $("#ptipo option:selected").text();
-      if (tipo=="Descargo"){
+      tipo= $("#ptipo").val();
+      if (tipo==0){
           st=arti[2];
         if (pcanti>parseFloat(st)){
           alert('cantidad supera al stock!! \n existencia:'+arti[2]);
@@ -226,7 +228,7 @@ $("#guardar").hide();
 			 st1=dato[1];
              $("#pcosto").val(st1*1);
           }
-      }if (tipo == "Cargo"){
+      }if (tipo == 1){
          dato=document.getElementById('pidarticulo').value.split('-'); 
           st1=dato[1]; 
          $("#pcosto").val(st1*1);

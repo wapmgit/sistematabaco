@@ -56,6 +56,7 @@ class AjustesController extends Controller
 			$idarticulo = $request -> get('idarticulo');
 			$cantidad = $request -> get('cantidad');
 			$tipo = $request -> get('tipo');
+			$tipomv = $request -> get('tipom');
 			$costo = $request -> get('precio_compra');
 
 			$cont = 0;
@@ -63,7 +64,8 @@ class AjustesController extends Controller
 				$detalle=new DetalleAjustes();
 				$detalle->idajuste=$ajuste->idajuste;
 				$detalle->idarticulo=$idarticulo[$cont];
-				$detalle->tipo_ajuste=$tipo[$cont];
+				if($tipo[$cont]==1){$var="Cargo";}else{$var="Descargo";}
+				$detalle->tipo_ajuste=$var;
 				$detalle->cantidad=$cantidad[$cont];
 				$detalle->costo=$costo[$cont];
 				$detalle->valorizado=($costo[$cont]*$cantidad[$cont]);
@@ -73,7 +75,7 @@ class AjustesController extends Controller
 				$valida=$tipo[$cont];
 				//dd($valida);
 				$articulo->precio=$costo[$cont];
-				if($valida=="Cargo"){ $tipom=1;
+				if($valida==1){ $tipom=1;
 					$articulo->stock=($articulo->stock+$cantidad[$cont]);
 				}else{ $tipom=2;
 					$articulo->stock=($articulo->stock-$cantidad[$cont]);
