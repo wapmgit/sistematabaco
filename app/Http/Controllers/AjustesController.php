@@ -73,7 +73,7 @@ class AjustesController extends Controller
 				$valida=$tipo[$cont];
 				//dd($valida);
 				$articulo->precio=$costo[$cont];
-				if($valida==="Cargo"){ $tipom=1;
+				if($valida=="Cargo"){ $tipom=1;
 					$articulo->stock=($articulo->stock+$cantidad[$cont]);
 				}else{ $tipom=2;
 					$articulo->stock=($articulo->stock-$cantidad[$cont]);
