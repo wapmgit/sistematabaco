@@ -50,6 +50,7 @@
         <div class ="row">
 
                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				   <div class="col-12 table-responsive">
                   <table id="detalles" width="100%">
                       <thead style="background-color: #E6E6E6">
                      
@@ -80,6 +81,7 @@
 					  <td><strong><?php echo number_format(($acumin-$acumout), 2,',','.');?></strong></td></tr>
                   </table>
                  
+                    </div>
                     </div>
                 </div>   
 				<div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
