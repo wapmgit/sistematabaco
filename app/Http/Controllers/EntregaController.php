@@ -11,7 +11,7 @@ use App\Models\Clientes;
 use App\Models\Kardex;
 use App\Models\Existencia;
 use App\Models\Articulo;
-use App\Models\controltobos;
+use App\Models\Controltobos;
 use Carbon\Carbon;
 use DB;
 use Auth;
