@@ -16,14 +16,18 @@ use Auth;
 class AjustesController extends Controller
 {
 	public function index(Request $request){	
-		$rol=DB::table('roles')-> select('newajuste','showajuste')->where('iduser','=',$request->user()->id)->first();
+		$rol=DB::table('roles')-> select('ajuste','newajuste','showajuste')->where('iduser','=',$request->user()->id)->first();
 
 		   $query=trim($request->get('searchText'));
 			$datos=DB::table('ajustes as ar')
             -> where ('ar.concepto','LIKE','%'.$query.'%')
             -> orderBy('ar.idajuste','desc')
             ->paginate(20);  
+				if($rol->ajuste==1){
 		return view('ajuste.index',["rol"=>$rol,"datos"=>$datos,"searchText"=>$query]);
+				    }else {
+	return view("reportes.mensajes.noautorizado");
+	}
 	}
 	public function create(Request $request){
 		$rol=DB::table('roles')-> select('newajuste','showajuste')->where('iduser','=',$request->user()->id)->first();	

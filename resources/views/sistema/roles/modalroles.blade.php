@@ -61,7 +61,12 @@
 					  <input type="checkbox" name="op4" class="minimal" @if($q->editcocedor==1) checked @endif ></label>
 					</div>
 					</div>
-
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					 <div class="form-group">
+					 <label>Acceso Clientes: </label><label>
+					  <input type="checkbox" name="op32" class="minimal" @if($q->clientes==1) checked @endif ></label>
+					</div>
+				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 					 <div class="form-group">
 					 <label>Crear Cliente: </label><label>
@@ -96,6 +101,12 @@
 				  </div>
                   <div class="tab-pane fade" id="custom-tabs-one-profile{{$q->id}}" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab{{$q->id}}">
                    <div  class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					 <div class="form-group">
+					 <label>Acceso Ajustes: </label><label>
+					  <input type="checkbox" name="op33" class="minimal" @if($q->ajuste==1) checked @endif ></label>
+					</div>
+				</div>
 				   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 					 <div class="form-group">
 					 <label>Crear Ajuste: </label><label>

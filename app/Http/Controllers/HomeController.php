@@ -131,6 +131,8 @@ class HomeController extends Controller
 		if ($request->get('op29')){ $data->movtobos=1; }else{ $data->movtobos=0; }
 		if ($request->get('op30')){ $data->entobar=1; }else{ $data->entobar=0; }
 		if ($request->get('op31')){ $data->rclientes=1; }else{ $data->rclientes=0; }
+		if ($request->get('op32')){ $data->clientes=1; }else{ $data->clientes=0; }
+		if ($request->get('op32')){ $data->ajuste=1; }else{ $data->ajuste=0; }
 
 		$data ->update();
 			

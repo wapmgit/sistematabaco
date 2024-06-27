@@ -18,7 +18,7 @@ class ClientesController extends Controller
 {
  	public function index(Request $request){	
 	$empresa=DB::table('empresa')->join('sistema','sistema.idempresa','=','empresa.idempresa')->first();
-		$rol=DB::table('roles')-> select('newcliente','editcliente','controltobos','movtobos')->where('iduser','=',$request->user()->id)->first();
+		$rol=DB::table('roles')-> select('clientes','newcliente','editcliente','controltobos','movtobos')->where('iduser','=',$request->user()->id)->first();
 
 		   $query=trim($request->get('searchText'));
 			$datos=DB::table('clientes')
@@ -31,7 +31,11 @@ class ClientesController extends Controller
 		->select('dep.iddeposito','dep.nombre','ex.existencia')
 		->where ('ex.idarticulo','=',4)
 		-> get();
+			if($rol->clientes==1){
 		return view('clientes.cliente.index',["depositos"=>$depositos,"rol"=>$rol,"datos"=>$datos,"empresa"=>$empresa,"searchText"=>$query]);
+		    }else {
+	return view("reportes.mensajes.noautorizado");
+	}
 	}
 	public function create(Request $request)
 	{
