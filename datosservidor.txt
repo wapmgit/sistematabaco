@@ -1,0 +1,2 @@
+git clone https://github.com/wapmgit/sistematabaco.git
+mysql tabaco*123
