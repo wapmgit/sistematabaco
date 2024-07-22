@@ -19,7 +19,7 @@ class DepositoController extends Controller
 		$this->middleware('auth');
 	}
  	public function index(Request $request){
-		$rol=DB::table('roles')-> select('newdeposito','editdeposito','showdeposito')->where('iduser','=',$request->	user()->id)->first();
+		$rol=DB::table('roles')-> select('newdeposito','editdeposito','showdeposito','deposito')->where('iduser','=',$request->	user()->id)->first();
 		   $query=trim($request->get('searchText'));
 			$datos=DB::table('deposito as de')
             -> where ('de.nombre','LIKE','%'.$query.'%')

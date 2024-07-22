@@ -15,10 +15,10 @@
             	<input type="text" name="nombre" class="form-control"  onchange="conMayusculas(this)"  value="{{$art->nombre}}" placeholder="Nombre...">
 				@if($errors->first('nombre'))<P class='text-danger'>{{$errors->first('nombre')}}</p>@endif
 		   </div>
-            <div class="form-group">
+           @if($rol->stock==1) <div class="form-group">
             	<label for="descripcion">Stock</label>
             	<input type="text" name="stock" class="form-control" value="{{$art->stock}}" readonly>
-            </div>
+            </div>@endif
 	                   <div class="form-group">
             	<label for="descripcion">Precio</label>
             	<input type="number" name="precio" class="form-control" value="{{$art->precio}}" step="0.001">

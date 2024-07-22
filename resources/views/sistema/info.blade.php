@@ -25,6 +25,7 @@ if (dias_transcurridos($fecha_a,$fserver) < 0){
 				herramienta de ayuda </br>para el control de entrada y salida de Produccion de Jalea.
 				<span></br><b>Empresa:</b> {{$empresa->rif}} - {{$empresa->nombre}}</span>
 				<span></br><b>Telefono:</b> {{$empresa->telefono}}<span>
+				<span></br><b>Corte:</b> 25 cada mes<span>
 
 			</p>
 			<p>

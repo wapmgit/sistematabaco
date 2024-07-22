@@ -97,6 +97,18 @@
 					  <input type="checkbox" name="op9" class="minimal" @if($q->showdeposito==1) checked @endif ></label>
 					</div>
 				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					 <div class="form-group">
+					 <label>Acceso a Stock: </label><label>
+					  <input type="checkbox" name="op34" class="minimal" @if($q->stock==1) checked @endif ></label>
+					</div>
+				</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					 <div class="form-group">
+					 <label>Acceso a Deposito Principal: </label><label>
+					  <input type="checkbox" name="op35" class="minimal" @if($q->deposito==1) checked @endif ></label>
+					</div>
+				</div>
                   </div>
 				  </div>
                   <div class="tab-pane fade" id="custom-tabs-one-profile{{$q->id}}" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab{{$q->id}}">

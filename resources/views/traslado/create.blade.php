@@ -54,7 +54,13 @@ if (dias_transcurridos($fecha_a,$fserver) < 0){
                              <select name="origen" id="origen" class="form-control selectpicker" data-live-search="true">
 							 <option value="0">Seleccione Origen..</option>
                              @foreach ($deposito as $dep)
+							  <?php if($dep->iddeposito==1){
+								  if($rol->deposito==1){?>
+									  <option value="{{$dep -> iddeposito}}">{{$dep-> nombre}}</option>   
+								<?php  }
+							  }else{?>
                               <option value="{{$dep -> iddeposito}}">{{$dep-> nombre}}</option> 
+							  	 <?php } ?>
                              @endforeach
                               </select>
                         </div>
@@ -65,7 +71,9 @@ if (dias_transcurridos($fecha_a,$fserver) < 0){
                              <select name="destino" id="destino" class="form-control selectpicker" data-live-search="true">
 							 <option value="0">Seleccione Destino..</option>
                              @foreach ($deposito as $dep)
+							
                               <option value="{{$dep -> iddeposito}}">{{$dep-> nombre}}</option> 
+						
                              @endforeach
                               </select>
                         </div>

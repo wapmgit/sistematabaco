@@ -14,7 +14,7 @@ use Auth;
 class ArticuloController extends Controller
 {
  	public function index(Request $request){	
-		$rol=DB::table('roles')-> select('newarticulo','editarticulo','entobar')->where('iduser','=',$request->user()->id)->first();
+		$rol=DB::table('roles')-> select('newarticulo','editarticulo','entobar','stock')->where('iduser','=',$request->user()->id)->first();
 
 		   $query=trim($request->get('searchText'));
 			$datos=DB::table('articulos as ar')
@@ -36,11 +36,13 @@ class ArticuloController extends Controller
 	public function create(){
 		return view('articulo.create');
 	}
-	public function edit($id)
+	public function edit(Request $request,$id)
     {
+	$rol=DB::table('roles')-> select('stock')->where('iduser','=',$request->user()->id)->first();
 		$art=Articulo::find($id);
 			return view('articulo.edit')
-			->with('art',$art);
+			->with('art',$art)
+			->with('rol',$rol);
 
     }
 	public function store (Request $request)

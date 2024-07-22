@@ -18,7 +18,21 @@
 					<th>Telefono</th>
 					<th>Opciones</th>
 				</thead>
-               @foreach ($datos as $cat)<?php $cont++;?>
+               @foreach ($datos as $cat)<?php $cont++;
+			   if($cat->iddeposito==1){?>
+					<td>{{ $cat->iddeposito}}</td>
+					<td>{{ $cat->nombre}}</td>
+					<td>{{ $cat->encargado}}</td>
+					<td>{{ $cat->movil}}</td>
+					<td>
+					@if($rol->editdeposito==1)	<a href="{{route('editdeposito',['id'=>$cat->iddeposito])}}"><button class="btn btn-warning btn-xs">Editar</button></a>@endif
+					@if($rol->deposito==1) 
+		<a href="{{route('showdeposito',['id'=>$cat->iddeposito])}}"><button class="btn btn-info btn-xs">Ver</button></a>@endif
+
+					</td>
+				</tr>  
+			   <?php }else{			   
+			   ?>
 				<tr>
 					<td>{{ $cat->iddeposito}}</td>
 					<td>{{ $cat->nombre}}</td>
@@ -26,9 +40,12 @@
 					<td>{{ $cat->movil}}</td>
 					<td>
 					@if($rol->editdeposito==1)	<a href="{{route('editdeposito',['id'=>$cat->iddeposito])}}"><button class="btn btn-warning btn-xs">Editar</button></a>@endif
-					@if($rol->showdeposito==1)	<a href="{{route('showdeposito',['id'=>$cat->iddeposito])}}"><button class="btn btn-info btn-xs">Ver</button></a>@endif
+					@if($rol->showdeposito==1) 
+		<a href="{{route('showdeposito',['id'=>$cat->iddeposito])}}"><button class="btn btn-info btn-xs">Ver</button></a>@endif
+
 					</td>
 				</tr>
+			   <?php } ?>
 				@endforeach
 			</table>
 		</div>

@@ -30,10 +30,12 @@ class TrasladoController extends Controller
             ->paginate(30);			
 		return view('traslado.index',["rol"=>$rol,"datos"=>$datos,"searchText"=>$query]);
 		}
-	public function create()
+	public function create(Request $request)
 	{
-		$empresa=DB::table('empresa')-> where('idempresa','=','1')->first();
+		$rol=DB::table('roles')-> select('deposito')->where('iduser','=',$request->user()->id)->first();
 		$deposito=Deposito::all();
+		$empresa=DB::table('empresa')-> where('idempresa','=','1')->first();
+		
 		$articulos =DB::table('articulos as art')
         -> select(DB::raw('CONCAT(art.codigo," - ",art.nombre," - ",stock) as articulo'),'art.idarticulo','art.stock','art.precio as costo')
         -> where('art.estado','=','Activo')
@@ -41,6 +43,7 @@ class TrasladoController extends Controller
 			return view('traslado.create')
 			->with('articulos',$articulos)
 			->with('deposito',$deposito)
+			->with('rol',$rol)
 			->with('empresa',$empresa);
 		}
 	public function store (Request $request)
