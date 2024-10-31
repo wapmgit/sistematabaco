@@ -1,7 +1,8 @@
 @extends ('layouts.master')
 @section ('contenido')
 <?php
- $fserver=date('Y-m-d');
+ $fserver=date('Y-m-d'); 
+
 $fecha_a=$empresa -> fechavence;
 function dias_transcurridos($fecha_a,$fserver)
 {

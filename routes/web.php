@@ -113,6 +113,8 @@ Route::get('report-ventas', [ReportesController::class, 'reportventas'])->name('
 Route::get('report-ventascliente', [ReportesController::class, 'reportventascliente'])->name('report-ventascliente');
 Route::get('report-produccion', [ReportesController::class, 'reportproduccion'])->name('report-produccion');
 Route::get('report-inventario', [ReportesController::class, 'inventario'])->name('report-inventario');
+Route::get('report-inventariofecha', [ReportesController::class, 'inventariofecha'])->name('report-inventariofecha');
+
 
 
 

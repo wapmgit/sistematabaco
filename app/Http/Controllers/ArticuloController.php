@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Articulo;
 use App\Models\Existencia;
+use App\Models\MovExistencia;
 use App\Models\Kardex;
 use Carbon\Carbon;
 use DB;
@@ -30,7 +31,7 @@ class ArticuloController extends Controller
 			-> where ('ex.idalmacen','=',2)
 			-> where ('art.idarticulo','=',1)
 			-> first();
-	//	dd($jalea);
+
 		return view('articulo.index',["jalea"=>$jalea,"rol"=>$rol,"datos"=>$datos,"searchText"=>$query]);
 	}
 	public function create(){
@@ -61,7 +62,6 @@ class ArticuloController extends Controller
 		if($request->get('venta')){
 			$dat->venta=1;
 		}
-
         $dat->save();
      
 				  $exis=new Existencia();
@@ -101,15 +101,29 @@ class ArticuloController extends Controller
     {
 		//dd($request);
 		//de la salida
+		$mytime=Carbon::now('America/Caracas');
 		$user=Auth::user()->name;
 		$articulo=Articulo::findOrFail($request->get('idproceso'));
 		$articulo->stock=($articulo->stock-($request->get('cnt')*24));
 		$articulo->update(); 
 		
 		$compra=Existencia::findOrFail($request->get('idproceso'));
+		$alma=$compra->idalmacen;
+		$exisant=$compra->existencia;
 		$compra->existencia=($compra->existencia-($request->get('cnt')*24));
 		$compra->update(); 		
 
+				$movorg=new MovExistencia;
+				$movorg->tipo="PASt";
+				$movorg->iddoc=0;
+				$movorg->deposito=$alma;
+				$movorg->articulo=$request->get('idproceso');
+				$movorg->cantidad=($request->get('cnt')*-24);
+				$movorg->fecha=$mytime->toDateTimeString();
+				$movorg->exisant=$exisant;
+				$movorg->usuario=$user;
+				$movorg->save();
+				
 					$kar=new Kardex;
 					$kar->fecha=$request->get('fecha');
 					$kar->documento="PasoTobo-".$request->get('obs');
@@ -125,9 +139,19 @@ class ArticuloController extends Controller
 		$arti->update(); 
 		
 		$in=Existencia::findOrFail(2);
+		$exisant=$in->existencia;
 		$in->existencia=($in->existencia+$request->get('cnt'));
 		$in->update(); 
-		
+				$movorg=new MovExistencia;
+				$movorg->tipo="PASt";
+				$movorg->iddoc=0;
+				$movorg->deposito=2;
+				$movorg->articulo=2;
+				$movorg->cantidad=$request->get('cnt');
+				$movorg->fecha=$mytime->toDateTimeString();
+				$movorg->exisant=$exisant;
+				$movorg->usuario=$user;
+				$movorg->save();
 					$kar=new Kardex;
 					$kar->fecha=$request->get('fecha');
 					$kar->documento="PasoTobo-".$request->get('obs');
@@ -142,9 +166,22 @@ class ArticuloController extends Controller
 			$arti->stock=($arti->stock-$request->get('cnt'));
 			$arti->update(); 
 		$com=Existencia::findOrFail(10);
+		$ante=$com->existencia;
 			$com->existencia=($com->existencia-$request->get('cnt'));
 			$com->update(); 
-		$kar=new Kardex;
+			
+				$movorg=new MovExistencia;
+				$movorg->tipo="PASt";
+				$movorg->iddoc=0;
+				$movorg->deposito=2;
+				$movorg->articulo=4;
+				$movorg->cantidad=$request->get('cnt')*-1;
+				$movorg->fecha=$mytime->toDateTimeString();
+				$movorg->exisant=$ante;
+				$movorg->usuario=$user;
+				$movorg->save();
+				
+			$kar=new Kardex;
 			$mytime=Carbon::now('America/Caracas');
 			$kar->fecha=$mytime->toDateTimeString();
 			$kar->documento="PasoTobo-".$request->get('obs');;

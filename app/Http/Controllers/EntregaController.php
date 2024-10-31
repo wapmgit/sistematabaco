@@ -10,6 +10,7 @@ use App\Models\DetalleEntrega;
 use App\Models\Clientes;
 use App\Models\Kardex;
 use App\Models\Existencia;
+use App\Models\MovExistencia;
 use App\Models\Articulo;
 use App\Models\Controltobos;
 use Carbon\Carbon;
@@ -106,7 +107,7 @@ $id=Auth::user()->id;
 				$tipom=2;
 				$articulo->stock=($articulo->stock-$cantidad[$cont]);
 				$articulo->update(); 
-				
+											
 					$kar=new Kardex;
 					$kar->fecha=$mytime->toDateTimeString();
 					$kar->documento="FAC-".$data->identrega;
@@ -119,10 +120,22 @@ $id=Auth::user()->id;
 				
 				$mov=DB::table('existencia')->where('idalmacen','=',1)->where('idarticulo','=',$idarticulo[$cont])->first();
 				$idmov=$mov->id;
+				$exisant=$mov->existencia;
 				$compra=Existencia::findOrFail($idmov);
 				$compra->existencia=($compra->existencia-$cantidad[$cont]);
 				$compra->update(); 	
 						
+				$movart=new MovExistencia;
+				$movart->tipo="FAC";
+				$movart->iddoc=$data->identrega;
+				$movart->deposito=1;
+				$movart->articulo=$idarticulo[$cont];
+				$movart->cantidad=$cantidad[$cont]*-1;
+				$movart->fecha=$mytime->toDateTimeString();
+				$movart->exisant=$exisant;
+				$movart->usuario=$user;
+				$movart->save();
+				
 					$cont=$cont+1;
 					}
 

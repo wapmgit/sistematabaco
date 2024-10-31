@@ -8,6 +8,7 @@ use App\Models\Traslado;
 use App\Models\Relacion;
 use App\Models\Deposito;
 use App\Models\Existencia;
+use App\Models\MovExistencia;
 use App\Models\detalleTraslado;
 use App\Models\Tanques;
 use Carbon\Carbon;
@@ -76,27 +77,81 @@ class TrasladoController extends Controller
             $detalle->save(); 
 			
 			$mov=DB::table('existencia')->where('idalmacen','=',$request->get('destino'))->where('idarticulo','=',$idarticulo[$cont])->first();
+			
 			if($mov==NULL){
 				  $exis=new Existencia();
 				  $exis->idalmacen=$request->get('destino');
 				  $exis->idarticulo=$idarticulo[$cont];
 				  $exis->existencia=$cantidad[$cont];
 				  $exis->save(); 
-				  $movd=DB::table('existencia')->where('idalmacen','=',$request->get('origen'))->where('idarticulo','=',$idarticulo[$cont])->first();
+				  			
+				$movart=new MovExistencia;
+				$movart->tipo="TRAS";
+				$movart->iddoc=$categoria->idtraslado;
+				$movart->deposito=$request->get('destino');
+				$movart->articulo=$idarticulo[$cont];
+				$movart->cantidad=$cantidad[$cont];
+				$movart->fecha=$mytime->toDateTimeString();
+				$movart->exisant=0;
+				$movart->usuario=$user;
+				$movart->save();
+
+				$movd=DB::table('existencia')->where('idalmacen','=',$request->get('origen'))->where('idarticulo','=',$idarticulo[$cont])->first();
 			    $idmovd=$movd->id;
+				
 				$venta=Existencia::findOrFail($idmovd);
+				$exisant=$venta->existencia;
 				$venta->existencia=($venta->existencia-$cantidad[$cont]);
-				$venta->update(); 	
+				$venta->update(); 
+				
+				$movorg=new MovExistencia;
+				$movorg->tipo="TRAS";
+				$movorg->iddoc=$categoria->idtraslado;
+				$movorg->deposito=$request->get('origen');
+				$movorg->articulo=$idarticulo[$cont];
+				$movorg->cantidad=$cantidad[$cont]*-1;
+				$movorg->fecha=$mytime->toDateTimeString();
+				$movorg->exisant=exisant;
+				$movorg->usuario=$user;
+				$movorg->save();
+				
 			}else{	
 				$idmov=$mov->id;
 				$compra=Existencia::findOrFail($idmov);
+				$exisant=$compra->existencia;
 				$compra->existencia=($compra->existencia+$cantidad[$cont]);
-				$compra->update(); 	
-			  $movd=DB::table('existencia')->where('idalmacen','=',$request->get('origen'))->where('idarticulo','=',$idarticulo[$cont])->first();
+				$compra->update(); 
+				
+				$movin=new MovExistencia;
+				$movin->tipo="TRAS";
+				$movin->iddoc=$categoria->idtraslado;
+				$movin->deposito=$request->get('destino');
+				$movin->articulo=$idarticulo[$cont];
+				$movin->cantidad=$cantidad[$cont];
+				$movin->fecha=$mytime->toDateTimeString();
+				$movin->exisant=$exisant;
+				$movin->usuario=$user;
+				$movin->save();				
+				
+				$movd=DB::table('existencia')->where('idalmacen','=',$request->get('origen'))->where('idarticulo','=',$idarticulo[$cont])->first();
 			    $idmovd=$movd->id;
 				$venta=Existencia::findOrFail($idmovd);
+				$exisant=$venta->existencia;
 				$venta->existencia=($venta->existencia-$cantidad[$cont]);
-				$venta->update(); }
+				$venta->update();
+	
+				$movorg=new MovExistencia;
+				$movorg->tipo="TRAS";
+				$movorg->iddoc=$categoria->idtraslado;
+				$movorg->deposito=$request->get('origen');
+				$movorg->articulo=$idarticulo[$cont];
+				$movorg->cantidad=$cantidad[$cont]*-1;
+				$movorg->fecha=$mytime->toDateTimeString();
+				$movorg->exisant=$exisant;
+				$movorg->usuario=$user;
+				$movorg->save();
+				
+								}
 		    $cont=$cont+1;	
 			}			
 		/*	}

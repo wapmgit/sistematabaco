@@ -1,2 +1,6 @@
 git clone https://github.com/wapmgit/sistematabaco.git
 mysql tabaco*123
+root Sistema1*Tabaco
+
+pasar base de datos
+mysql -u root -p juanchodb < juanchobd\ 20240909\ 1434.sql

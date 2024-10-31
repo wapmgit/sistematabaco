@@ -8,6 +8,7 @@ use App\Models\Ajustes;
 use App\Models\Articulo;
 use App\Models\Kardex;
 use App\Models\Existencia;
+use App\Models\MovExistencia;
 use App\Models\DetalleAjustes;
 use Carbon\Carbon;
 use DB;
@@ -76,6 +77,7 @@ class AjustesController extends Controller
 				$detalle->save();  
             
 				$articulo=Articulo::findOrFail($idarticulo[$cont]);
+				
 				$valida=$tipo[$cont];
 				//dd($valida);
 				$articulo->precio=$costo[$cont];
@@ -85,6 +87,7 @@ class AjustesController extends Controller
 					$articulo->stock=($articulo->stock-$cantidad[$cont]);
 				}
 				$articulo->update(); 
+				
 				
 					$kar=new Kardex;
 					$kar->fecha=$mytime->toDateTimeString();
@@ -98,12 +101,24 @@ class AjustesController extends Controller
 				
 				$mov=DB::table('existencia')->where('idalmacen','=',1)->where('idarticulo','=',$idarticulo[$cont])->first();
 				$idmov=$mov->id;
+				$exisant=$mov->existencia;
 				$compra=Existencia::findOrFail($idmov);
 				if($valida==1){
 				$compra->existencia=($compra->existencia+$cantidad[$cont]); }else{
 				$compra->existencia=($compra->existencia-$cantidad[$cont]); }
 				$compra->update(); 	
 						
+				$movart=new MovExistencia;
+				$movart->tipo="AJUS";
+				$movart->iddoc=$ajuste->idajuste;
+				$movart->deposito=1;
+				$movart->articulo=$idarticulo[$cont];
+				$movart->cantidad=$cantidad[$cont];
+				$movart->fecha=$mytime->toDateTimeString();
+				$movart->exisant=$exisant;
+				$movart->usuario=$user;
+				$movart->save();
+				
 					$cont=$cont+1;
 					}
 				DB::commit();

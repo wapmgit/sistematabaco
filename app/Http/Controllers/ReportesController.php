@@ -163,5 +163,35 @@ $rol=DB::table('roles')-> select('rproduccion')->where('iduser','=',$request->us
 		return view("reportes.mensajes.noautorizado");
 		}			
     }
+	
+	public function inventariofecha(Request $request)
+    {	
+	//dd($request);
+		$corteHoy = date("Y-m-d");
+        $empresa=DB::table('empresa')-> where('idempresa','=','1')->first();
+		$rol=DB::table('roles')-> select('rinventario')->where('iduser','=',$request->user()->id)->first();
+        $query=trim($request->get('searchText'));
+		
+			if (($query)==""){$query=$corteHoy; }
+
+            $datos=DB::table('mov_existencias as me')
+			->join('deposito as dep','dep.iddeposito','=','me.deposito')
+            ->join ('articulos as art', 'art.idarticulo','=','me.articulo')
+			-> select('me.*','dep.nombre as deposito','art.nombre as articulo')
+			->where('me.articulo','=',$request->get('articulo'))
+			->where('me.deposito','=',$request->get('deposito'))
+			->where('me.fecha','=',$query)
+			->orderby('me.idmov','asc')
+            ->get();
+			//dd($datos);
+		$depo=DB::table('deposito')->get();
+		$articulos=DB::table('articulos')->get();
+		//$query=$corteHoy;
+			if ($rol->rinventario==1){
+        return view('reportes.inventariofecha.index',["depo"=>$depo,"articulos"=>$articulos,"empresa"=>$empresa,"datos"=>$datos,"searchText"=>$query]);
+		} else { 
+		return view("reportes.mensajes.noautorizado");
+		}		
+    }
 
 }

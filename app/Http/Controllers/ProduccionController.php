@@ -10,6 +10,7 @@ use App\Models\ParrillaTurno;
 use App\Models\Parrilla;
 use App\Models\Kardex;
 use App\Models\Existencia;
+use App\Models\MovExistencia;
 use App\Models\Articulo;
 use Carbon\Carbon;
 use DB;
@@ -84,10 +85,24 @@ class ProduccionController extends Controller
 		$articulo=Articulo::findOrFail(3);
 		$articulo->stock=($articulo->stock-$request->get('kgsubido'));
 		$articulo->update(); 
+		
+				
 
 				$compra=Existencia::findOrFail(3);
+				$exisant=$compra->existencia;
 				$compra->existencia=($compra->existencia-$request->get('kgsubido'));
 				$compra->update(); 	
+				
+				$movart=new MovExistencia;
+				$movart->tipo="PRO";
+				$movart->iddoc=$data->idproceso;
+				$movart->deposito=1;
+				$movart->articulo=3;
+				$movart->cantidad=$request->get('kgsubido')*-1;
+				$movart->fecha=$mytime->toDateTimeString();
+				$movart->exisant=$exisant;
+				$movart->usuario=$user;
+				$movart->save();
 				
 					$kar=new Kardex;
 					$kar->fecha=$mytime->toDateTimeString();
@@ -135,6 +150,7 @@ class ProduccionController extends Controller
      }
 	 public function closeproduccion(Request $request){
 		/// dd($request);
+		$mytime=Carbon::now('America/Caracas');
 		$user=Auth::user()->name;
 		$actp=Produccion::findOrFail($request->get('idproceso'));
 		$actp->kgbajado=$request->get('kgb');
@@ -168,8 +184,20 @@ class ProduccionController extends Controller
 		$articulo->update(); 
 				
 				$compra=Existencia::findOrFail(1);
+				$exisant=$compra->existencia;
 				$compra->existencia=($compra->existencia+$request->get('sobrante'));
-				$compra->update(); 	
+				$compra->update();
+				
+				$movart=new MovExistencia;
+				$movart->tipo="PRO";
+				$movart->iddoc=$request->get('idproceso');
+				$movart->deposito=2;
+				$movart->articulo=1;
+				$movart->cantidad=$request->get('sobrante');
+				$movart->fecha=$mytime->toDateTimeString();
+				$movart->exisant=$exisant;
+				$movart->usuario=$user;
+				$movart->save();
 				
 					$kar=new Kardex;
 					$mytime=Carbon::now('America/Caracas');
@@ -186,9 +214,22 @@ class ProduccionController extends Controller
 			$arti->stock=($arti->stock+$request->get('tobo'));
 			$arti->update(); 
 		$com=Existencia::findOrFail(2);
+		$exisant=$com->existencia;
 			$com->existencia=($com->existencia+$request->get('tobo'));
 			$com->update(); 
-		$kar=new Kardex;
+			
+			$movart=new MovExistencia;
+				$movart->tipo="PRO";
+				$movart->iddoc=$request->get('idproceso');
+				$movart->deposito=2;
+				$movart->articulo=2;
+				$movart->cantidad=$request->get('tobo');
+				$movart->fecha=$mytime->toDateTimeString();
+				$movart->exisant=$exisant;
+				$movart->usuario=$user;
+				$movart->save();
+			
+			$kar=new Kardex;
 			$mytime=Carbon::now('America/Caracas');
 			$kar->fecha=$mytime->toDateTimeString();
 			$kar->documento="PRO-".$request->get('idproceso')." ".$acp->nombre." T".$turnos->turno;
@@ -203,8 +244,21 @@ class ProduccionController extends Controller
 			$arti->stock=($arti->stock-$request->get('tobo'));
 			$arti->update(); 
 		$com=Existencia::findOrFail(10);
+		$exisant=$com->existencia;
 			$com->existencia=($com->existencia-$request->get('tobo'));
 			$com->update(); 
+			
+			$movart=new MovExistencia;
+				$movart->tipo="PRO";
+				$movart->iddoc=$request->get('idproceso');
+				$movart->deposito=2;
+				$movart->articulo=4;
+				$movart->cantidad=($request->get('tobo')*-1);
+				$movart->fecha=$mytime->toDateTimeString();
+				$movart->exisant=$exisant;
+				$movart->usuario=$user;
+				$movart->save();
+				
 		$kar=new Kardex;
 			$mytime=Carbon::now('America/Caracas');
 			$kar->fecha=$mytime->toDateTimeString();
