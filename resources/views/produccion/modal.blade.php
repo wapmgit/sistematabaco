@@ -8,7 +8,7 @@ $fserver=date('Y-m-d');
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<div class="modal-primary">
-                     <h5 class="modal-title" align="center">Cerrar Turno <input type="hidden" name="fecha" value="<?php echo $fserver; ?>" class="form-control"></h5>
+                     <h5 class="modal-title" align="center">Cerrar Turno </h5>
 	    	</div>
 			<div class="modal-body">
 				<div class="row">
@@ -50,6 +50,12 @@ $fserver=date('Y-m-d');
 							<input type="text" name="obs"  class="form-control" placeholder="Observacion..">
 							</div>
 						</div>
+							<div class="col-md-12" align="center">	
+				<div class="form-group">
+				<label>Fecha Cierre</label> 
+				<input type="date" name="fecha" id="fecha" class="form-control" required value="{{$fserver}}"></input>
+			</div>
+		</div>	
 					</div>
 					</div>
 					</div><!-- /.card -->

@@ -4,3 +4,5 @@ root Sistema1*Tabaco
 
 pasar base de datos
 mysql -u root -p juanchodb < juanchobd\ 20240909\ 1434.sql
+@wapmgit
+wapm1983*

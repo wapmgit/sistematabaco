@@ -66,7 +66,7 @@ class ProduccionController extends Controller
         $data->kgcocina =$request->get('kgcocina');
         $data->observacion = $request->get('observacion');
 		$mytime=Carbon::now('America/Caracas');
-		$data->fecha=$mytime->toDateTimeString();
+		$data->fecha=$request->get('fecha');
 		$data->usuario = $user;
         $data->save();
 		
@@ -194,14 +194,14 @@ class ProduccionController extends Controller
 				$movart->deposito=2;
 				$movart->articulo=1;
 				$movart->cantidad=$request->get('sobrante');
-				$movart->fecha=$mytime->toDateTimeString();
+				$movart->fecha=$request->get('fecha');
 				$movart->exisant=$exisant;
 				$movart->usuario=$user;
 				$movart->save();
 				
 					$kar=new Kardex;
 					$mytime=Carbon::now('America/Caracas');
-					$kar->fecha=$mytime->toDateTimeString();
+					$kar->fecha=$request->get('fecha');
 					$kar->documento="PRO-".$request->get('idproceso')." ".$acp->nombre." T".$turnos->turno;
 					$kar->idarticulo=1;
 					$kar->cantidad=$request->get('sobrante');
@@ -224,14 +224,14 @@ class ProduccionController extends Controller
 				$movart->deposito=2;
 				$movart->articulo=2;
 				$movart->cantidad=$request->get('tobo');
-				$movart->fecha=$mytime->toDateTimeString();
+				$movart->fecha=$request->get('fecha');
 				$movart->exisant=$exisant;
 				$movart->usuario=$user;
 				$movart->save();
 			
 			$kar=new Kardex;
 			$mytime=Carbon::now('America/Caracas');
-			$kar->fecha=$mytime->toDateTimeString();
+			$kar->fecha=$request->get('fecha');
 			$kar->documento="PRO-".$request->get('idproceso')." ".$acp->nombre." T".$turnos->turno;
 			$kar->idarticulo=2;
 			$kar->cantidad=$request->get('tobo');
@@ -254,14 +254,14 @@ class ProduccionController extends Controller
 				$movart->deposito=2;
 				$movart->articulo=4;
 				$movart->cantidad=($request->get('tobo')*-1);
-				$movart->fecha=$mytime->toDateTimeString();
+				$movart->fecha=$request->get('fecha');
 				$movart->exisant=$exisant;
 				$movart->usuario=$user;
 				$movart->save();
 				
 		$kar=new Kardex;
 			$mytime=Carbon::now('America/Caracas');
-			$kar->fecha=$mytime->toDateTimeString();
+			$kar->fecha=$request->get('fecha');
 			$kar->documento="PRO-".$request->get('idproceso')." ".$acp->nombre." T".$turnos->turno;
 			$kar->idarticulo=4;
 			$kar->cantidad=$request->get('tobo');

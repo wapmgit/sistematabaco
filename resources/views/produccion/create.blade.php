@@ -28,7 +28,7 @@ $idv=0;
 <form action="{{route('saveproduccion')}}" id="formrecepcion" method="POST" enctype="multipart/form-data" >         
 			{{csrf_field()}}
 <div class="row">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
 				<div class="form-group">
 				<label>Cocedor</label> 
 				<select name="cocedor" id="cocedor" class="form-control selectpicker" data-live-search="true">
@@ -38,6 +38,12 @@ $idv=0;
 				@endforeach
 				</select>
 					@if($errors->first('cocedor'))<P class='text-danger'>{{$errors->first('cocedor')}}</p>@endif
+			</div>
+		</div>
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+				<div class="form-group">
+				<label>Fecha</label> 
+				<input type="date" name="fecha" id="fecha" class="form-control" required value="{{$fserver}}"></input>
 			</div>
 		</div>		
 		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
