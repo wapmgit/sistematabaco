@@ -38,6 +38,7 @@ class CocedorController extends Controller
         $cat->nombre=$request->get('nombre');
         $cat->telefono=$request->get('telefono');
         $cat->cedula=$request->get('cedula');
+		$cat->activo=$request->get('activo');
         $cat->update();
        return Redirect::to('cocedores');
     }

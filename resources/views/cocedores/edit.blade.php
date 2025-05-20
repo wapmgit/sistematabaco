@@ -20,6 +20,17 @@
             	<label for="descripcion">Telefono</label>
             	<input type="text" name="telefono" class="form-control" value="{{$recolector->telefono}}" placeholder="telefono...">
             </div>   
+            	 <div class="form-group">
+            			<label >Estatus</label>
+            			<select name="activo" class="form-control">
+            				
+            				<option <?php if ($recolector->activo==0){ echo "selected"; } ?>value="0">Activo</option>
+            				<option <?php if ($recolector->activo==1){ echo "selected"; } ?>value="1">Inactivo</option>
+            				
+            			</select>
+            			
+            	
+            </div>
 		</div>
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">	
             <div class="form-group">

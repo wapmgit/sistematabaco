@@ -20,7 +20,7 @@
                @foreach ($datos as $cat)
 				<tr>
 					<td>{{ $cat->idcocedor}}</td>
-					<td>{{ $cat->nombre}}</td>
+					<td>{{ $cat->nombre}} @if($cat->activo==1) *Inactivo* @endif</td>
 					<td>{{ $cat->cedula}}</td>
 					<td>{{ $cat->telefono}}</td>					
 					<td>
