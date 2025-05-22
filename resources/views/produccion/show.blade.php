@@ -38,7 +38,7 @@ return $insertar_ceros = $recibo.$numero;
 
 				  <h4 align="center">PRODUCCION</h4>
               <h5 align="center"><?php echo add_ceros($datos-> idproceso,$ceros); ?></h5>
-              <h6 align="center"></h6>
+              <h6 align="center">@if($datos->estatus==2) *Anulada* @endif</h6>
 				</div>
 				    <div class="col-3" align="center">
 				<img src="{{asset('dist/img/logo.png')}}" width="50%" height="50%" title="NKS">

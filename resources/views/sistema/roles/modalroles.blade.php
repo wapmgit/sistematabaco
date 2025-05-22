@@ -203,6 +203,12 @@
 					  <input type="checkbox" name="op30" class="minimal" @if($q->entobar==1) checked @endif ></label>
 					</div>
 				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					 <div class="form-group">
+					 <label>Anular Produccion : </label><label>
+					  <input type="checkbox" name="op36" class="minimal" @if($q->anularproduccion==1) checked @endif ></label>
+					</div>
+				</div>
 				   </div>
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-one-messages{{$q->id}}" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab{{$q->id}}">

@@ -85,6 +85,7 @@ Route::get('showproduccion/{id}', [ProduccionController::class, 'show'])->name('
 Route::post('saveproduccion', [ProduccionController::class, 'store'])->name('saveproduccion');
 Route::post('filtroturno', [ProduccionController::class, 'listarturno'])->name('filtroturno');
 Route::post('closeproduccion', [ProduccionController::class, 'closeproduccion'])->name('closeproduccion');
+Route::post('anularproduccion', [ProduccionController::class, 'anularproduccion'])->name('anularproduccion');
 //deposito
 Route::get('deposito', [DepositoController::class, 'index'])->name('deposito');
 Route::get('newdeposito', [DepositoController::class, 'create'])->name('newdeposito');

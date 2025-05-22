@@ -23,8 +23,11 @@
 					<th>Opciones</th>
 				</thead>
 				@foreach ($datos as $dat)<?php $cont++; ?>
-				<tr>
-					<td>{{ $dat->idproceso}}</td>
+				<tr <?php if($dat->estatus==2){ echo "bgcolor='#EC7063'";}?>>
+					<td>{{ $dat->idproceso}} @if($rol->anularproduccion==1)
+					<?php if($dat->estatus==0){ ?>	<a href="" data-target="#modaldelete-{{$dat->idproceso}}" data-toggle="modal" >
+					<i class="fa fa-light fa-trash"></i></a>
+					<?php } ?> @endif</td>
 					<td><small>{{ date("d-m-Y",strtotime($dat->fecha))}}</small></td>
 					<td><small>{{ $dat->cocedor}}</small></td>
 					<td>{{ $dat->parrilla}}</td>
@@ -42,6 +45,7 @@
 					</td>
 				</tr>	
 			@include('produccion.modal')					
+			@include('produccion.modaldelete')					
 				@endforeach
 			</table>
 				

@@ -19,7 +19,7 @@ use Auth;
 class ProduccionController extends Controller
 {
  	public function index(Request $request){	
-		$rol=DB::table('roles')-> select('newproceso','showproduccion','closeproceso')->where('iduser','=',$request->user()->id)->first();
+		$rol=DB::table('roles')-> select('newproceso','showproduccion','closeproceso','anularproduccion')->where('iduser','=',$request->user()->id)->first();
 
 		   $query=trim($request->get('searchText'));
 			$datos=DB::table('produccion as pr')
@@ -116,7 +116,61 @@ class ProduccionController extends Controller
 					
        return Redirect::to('produccion');
 
-    }
+}
+public function anularproduccion(Request $request){
+	//dd($request);
+	$mytime=Carbon::now('America/Caracas');
+	$user=Auth::user()->name;
+	$userid=Auth::user()->id;
+	$actp=Produccion::findOrFail($request->get('idproceso'));
+		$actp->estatus=2;
+        $actp->update();
+		
+		$turnos=DB::table('parrillaturno')
+		->where('parrilla','=',$actp->idparrilla)
+		->where('turno','=',$actp->idturno)
+		->first();
+		
+		$dat2=ParrillaTurno::findOrFail($turnos->id);
+		$dat2->status=0;
+        $dat2->update();
+		
+		$act=Cocedor::findOrFail($actp->idcocedor);
+		$act->activo=0;
+        $act->update();
+		//act stock
+		$articulo=Articulo::findOrFail(3);
+		$articulo->stock=($articulo->stock+$actp->kgsubido);
+		$articulo->update(); 
+						
+				$compra=Existencia::findOrFail(3);
+				$exisant=$compra->existencia;
+				$compra->existencia=($compra->existencia+$actp->kgsubido);
+				$compra->update(); 	
+				
+				$movart=new MovExistencia;
+				$movart->tipo="PRO";
+				$movart->iddoc=$actp->idproceso;
+				$movart->deposito=1;
+				$movart->articulo=3;
+				$movart->cantidad=$actp->kgsubido;
+				$movart->fecha=$mytime->toDateTimeString();
+				$movart->exisant=$exisant;
+				$movart->usuario=$user;
+				$movart->save();
+				
+					$kar=new Kardex;
+					$kar->fecha=$mytime->toDateTimeString();
+					$kar->documento="PRO-".$actp->idproceso;
+					$kar->idarticulo=3;
+					$kar->cantidad=$actp->kgsubido;
+					$kar->costo=$articulo->precio;
+					$kar->tipo=1; 
+					$kar->user=$user;
+					$kar->save();
+	return Redirect::to('produccion');
+}
+
 		public function show($id){
 		
 		$empresa=DB::table('empresa')-> where('idempresa','=','1')->first();

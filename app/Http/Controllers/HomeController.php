@@ -135,6 +135,7 @@ class HomeController extends Controller
 		if ($request->get('op33')){ $data->ajuste=1; }else{ $data->ajuste=0; }
 		if ($request->get('op34')){ $data->stock=1; }else{ $data->stock=0; }
 		if ($request->get('op35')){ $data->deposito=1; }else{ $data->deposito=0; }
+		if ($request->get('op36')){ $data->anularproduccion=1; }else{ $data->anularproduccion=0; }
 
 		$data ->update();
 			
