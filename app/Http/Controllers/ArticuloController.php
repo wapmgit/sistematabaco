@@ -31,8 +31,12 @@ class ArticuloController extends Controller
 			-> where ('ex.idalmacen','=',2)
 			-> where ('art.idarticulo','=',1)
 			-> first();
-
-		return view('articulo.index',["jalea"=>$jalea,"rol"=>$rol,"datos"=>$datos,"searchText"=>$query]);
+			$existencia=DB::table('existencia as e')
+			->join('articulos as a','a.idarticulo','=','e.idarticulo')
+			->join('deposito as de','e.idalmacen','=','de.iddeposito')
+			->select('de.nombre','e.existencia','e.idarticulo')
+			->get();
+		return view('articulo.index',["existencia"=>$existencia,"jalea"=>$jalea,"rol"=>$rol,"datos"=>$datos,"searchText"=>$query]);
 	}
 	public function create(){
 		return view('articulo.create');

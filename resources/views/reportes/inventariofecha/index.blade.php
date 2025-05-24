@@ -10,7 +10,7 @@
               <!-- title row -->
 	<div class="row">
     <h6> 
-                    <small class="float-center">     NKS-Software</small>
+                    <small class="float-center">NKS-Software</small>
                   </h6>
                 <!-- /.col -->
 		</div>
@@ -81,7 +81,11 @@
 				
 						</tr>
 					</table>
-			
+			<?php if((count($datos)==NULL) and ($info!=NULL)) {?>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
+				<p> Ultima Fecha de Movimiento en Almacen {{$info->deposito}}, el <?php echo date("d-m-Y",strtotime($info->fecha)); ?>, stock {{$info->exisant}}</p>
+				</div>
+				<?php } ?>
 		
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 		       
 					<label>Usuario: </label>  {{ Auth::user()->name }}  
@@ -89,7 +93,6 @@
 					<button type="button" id="imprimir" class="btn btn-primary btn-sm" data-dismiss="modal">Imprimir</button> 
 					</div>
 				</div>
-				
 			</div> 
 			</div> 
 	@push ('scripts')

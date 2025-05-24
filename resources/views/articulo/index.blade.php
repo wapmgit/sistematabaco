@@ -16,13 +16,13 @@
 						<th>Precio</th>
 					<th>Opciones</th>
 				</thead>
-				<?php $cnt=0;  if($jalea != NULL){ $cnt=$jalea->existencia; } ?>
+				<?php $cnt=0;  $acumexistencia=0;  if($jalea != NULL){ $cnt=$jalea->existencia; } ?>
                @foreach ($datos as $cat)
 				<tr>
 					<td>{{ $cat->nombre}}	@if($rol->entobar==1)	<?php if(($cat->idarticulo==1)and($cnt>0)) {?>
 						 <a data-target="#modal-tobo{{$cat->idarticulo}}" data-toggle="modal">   <img  src="{{asset('dist/img/tobo2.png')}}"  alt="Entobar" height="25" width="25"></a>
 				<?php	}?>@endif</td>
-				@if($rol->stock==1)		<td>{{ $cat->stock}}</td>@endif
+				@if($rol->stock==1)<td><a href="" data-target="#modal-existencia-{{$cat->idarticulo}}" data-toggle="modal">{{ $cat->stock}}</a>@include('articulo.modal_existencia')</td>@endif
 					<td>{{ $cat->precio}}</td>
 					<td>
 					@if($rol->editarticulo==1)	

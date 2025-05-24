@@ -29,7 +29,7 @@ class ProduccionController extends Controller
 			->select('pr.*','pa.nombre as parrilla','tu.nombreturno as turno','co.nombre as cocedor')
             -> where ('co.nombre','LIKE','%'.$query.'%')
             -> orderBy('pr.idproceso','desc')
-            ->paginate(20);  
+            ->paginate(100);  
 		return view('produccion.index',["rol"=>$rol,"datos"=>$datos,"searchText"=>$query]);
 	}
 		public function create(Request $request){

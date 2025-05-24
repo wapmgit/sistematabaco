@@ -184,11 +184,20 @@ $rol=DB::table('roles')-> select('rproduccion')->where('iduser','=',$request->us
 			->orderby('me.idmov','asc')
             ->get();
 			//dd($datos);
+			 $info=DB::table('mov_existencias as me')
+			->join('deposito as dep','dep.iddeposito','=','me.deposito')
+            ->join ('articulos as art', 'art.idarticulo','=','me.articulo')
+			-> select('me.*','dep.nombre as deposito','art.nombre as articulo')
+			->where('me.articulo','=',$request->get('articulo'))
+			->where('me.deposito','=',$request->get('deposito'))
+			->orderby('me.idmov','asc')
+            ->first();	
+		//dd($info);			
 		$depo=DB::table('deposito')->get();
 		$articulos=DB::table('articulos')->get();
 		//$query=$corteHoy;
 			if ($rol->rinventario==1){
-        return view('reportes.inventariofecha.index',["depo"=>$depo,"articulos"=>$articulos,"empresa"=>$empresa,"datos"=>$datos,"searchText"=>$query]);
+        return view('reportes.inventariofecha.index',["info"=>$info,"depo"=>$depo,"articulos"=>$articulos,"empresa"=>$empresa,"datos"=>$datos,"searchText"=>$query]);
 		} else { 
 		return view("reportes.mensajes.noautorizado");
 		}		
