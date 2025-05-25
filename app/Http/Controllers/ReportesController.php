@@ -149,6 +149,7 @@ $rol=DB::table('roles')-> select('rproduccion')->where('iduser','=',$request->us
 			$rol=DB::table('roles')-> select('rinventario')->where('iduser','=',$request->user()->id)->first();
 		$inv=DB::table('existencia as ex')
 		->join('articulos as ar','ar.idarticulo','=','ex.idarticulo')
+		->orderby('ar.idarticulo', 'asc')
 		->get();
 
 		$depo=DB::table('existencia as ex')
