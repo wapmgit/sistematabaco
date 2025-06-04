@@ -194,7 +194,7 @@ $id=Auth::user()->id;
 				$articulo->stock=($articulo->stock+$arraycnt[$contr]);
 				$articulo->update(); 
 				
-				$mov=DB::table('existencia')->where('idalmacen','=',3)->where('idarticulo','=',$arrayid[$contr])->first();
+				$mov=DB::table('existencia')->where('idalmacen','=',1)->where('idarticulo','=',$arrayid[$contr])->first();
 				$idmov=$mov->id;
 				$compra=Existencia::findOrFail($idmov);
 				$compra->existencia=($compra->existencia+$arraycnt[$contr]);
