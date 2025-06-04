@@ -30,7 +30,12 @@
                   <tbody>
 				        @foreach ($datos as $dat)
                   <tr>
-                    <td>{{$dat->idproceso}}</td>
+                    <td>{{$dat->idproceso}}
+						<?php if($dat->estatus==0){ ?>
+					@if($rol->anularproduccion==1)
+					<a href="" data-target="#modaldelete-{{$dat->idproceso}}" data-toggle="modal" >
+					<i class="fa fa-trash"></i></a>@endif
+						<?php } ?></td>
                     <td>{{$dat->fecha}}</td>
                     <td>{{$dat->cocedor}}</td>
                     <td>{{$dat->parrilla}}</td>
